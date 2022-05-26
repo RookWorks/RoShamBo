@@ -9,7 +9,7 @@ moves = random.choice(['rock', 'paper', 'scissors'])
 in this game"""
 
 
-class Player(moves):
+class Player('moves'):
     def __init__(self):
         self.player1 = self.moves
         self.player2 = random.choice(self.moves)

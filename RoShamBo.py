@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import random
+
 """This program plays a game of Rock, Paper, Scissors between two Players,
 and reports both Player's scores each round."""
 
@@ -11,9 +13,11 @@ in this game"""
 
 class Player:
     def move(self):
-        return 'rock'
+        self.player_move = self.moves
+        self.comp_move = random.choice
 
-    def learn(self, my_move, their_move):
+
+    def learn(self, player_move, comp_move):
         pass
 
 
