@@ -14,11 +14,14 @@ in this game"""
 class Player:
     def move(self):
         self.player_move = self.moves
-        self.comp_move = random.choice
+        self.comp_move = random.choice(self.moves)
 
 
     def learn(self, player_move, comp_move):
         pass
+
+class HumanPlayer(Player):
+    move = input ("Which will you choose? Rock! Paper! Scissors! GO!").lower
 
 
 def beats(one, two):
