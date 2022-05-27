@@ -5,23 +5,29 @@ import random
 """This program plays a game of Rock, Paper, Scissors between two Players,
 and reports both Player's scores each round."""
 
-moves = ['rock', 'paper', 'scissors']
+
 
 """The Player class is the parent class for all of the Players
 in this game"""
 
 
 class Player:
+    moves = ["rock", "paper", "scissors"]
     def move(self):
         self.player_move = self.moves
         self.comp_move = random.choice(self.moves)
 
 
     def learn(self, player_move, comp_move):
-        pass
+        self.player_move = player_move
+        self.comp_move = comp_move
 
 class HumanPlayer(Player):
-    move = input ("Which will you choose? Rock! Paper! Scissors! GO!").lower
+    def moves(self):
+        while True:
+            move = input ("Which will you choose? Rock! Paper! Scissors! GO!").lower()
+            if move in moves:
+                return move
 
 
 def beats(one, two):
