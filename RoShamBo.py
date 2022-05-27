@@ -23,11 +23,19 @@ class Player:
         self.comp_move = comp_move
 
 class HumanPlayer(Player):
-    def moves(self):
+    def move(self):
         while True:
-            move = input ("Which will you choose? Rock! Paper! Scissors! GO!").lower()
-            if move in moves:
-                return move
+            human_move = input ("Which will you choose? Rock! Paper! Scissors! GO!").lower()
+            if human_move in self.moves:
+                return human_move
+
+class RandomPlayer(Player):
+    def move(self):
+        return random.choice(self.moves)
+
+class ReflectPlayer(Player):
+    def move(self):
+        return self.comp_move
 
 
 def beats(one, two):
