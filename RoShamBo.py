@@ -10,6 +10,7 @@ in this game"""
 
 
 class Player:
+    
     def __init__(self):
         self.player_move = random.choice(moves)
         self.comp_move = random.choice(moves)
@@ -43,20 +44,20 @@ class reflectPlayer(Player):
 #always something different
 class cyclePlayer(Player):
     def move(self):
-        if self.comp_move == self.moves[2]:
-            return self.moves[0]
-        elif self.comp_move == self.moves[1]:
-            return self.moves[2]
-        else:
-            return self.moves[0]
+        self.comp_move = random.sample(moves)
+        return (self.comp_move)
 
 
 class Game:
+    #Keeping score
+    p1_score = 0
+    p2_score = 0
+
     def __init__(self, p1, p2):
         self.p1 = p1
         self.p2 = p2
         
-    def beats(one, two):
+    def beats(self, one, two):
         return ((one == 'rock' and two == 'scissors') or
                 (one == 'scissors' and two == 'paper') or
                 (one == 'paper' and two == 'rock'))
@@ -64,10 +65,7 @@ class Game:
     def play_round(self):
         move1 = self.p1.move()
         move2 = self.p2.move()
-        #Keeping score
-        if self.beats(move1, move2):
-            self.score +=1
-            win = "You win {round}!"
+
         print(f"Player 1: {move1}  Player 2: {move2}")
         
         self.p1.learn(move1, move2)
@@ -75,12 +73,12 @@ class Game:
 
     def play_game(self):
         print("Are ya ready?! Let's go!")
-        for round in range(3):
+        for round in range(3,1):
             print(f"Round {round}:")
             self.play_round()
         print("Game over!")
 
 
 if __name__ == '__main__':
-    game = Game(humanPlayer(), random.choice([randomPlayer(), reflectPlayer()]))
+    game = Game(humanPlayer(), random.choice([randomPlayer(), reflectPlayer(), cyclePlayer()]))
     game.play_game()
