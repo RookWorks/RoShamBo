@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 import random
-"""This program plays a game of Rock, Paper, Scissors between two Players,
-and reports both Player's scores each round."""
+# """This program plays a game of Rock, Paper, Scissors between two Players,
+# and reports both Player's scores each round."""
 
-moves = ['rock', 'paper', 'scissors']
+moves = ["rock", "paper", "scissors"]
 
-"""The Player class is the parent class for all of the Players
-in this game"""
+# """The Player class is the parent class for all of the Players
+# in this game"""
 
 
 class Player:
@@ -67,26 +67,47 @@ class Game:
         move1 = self.p1.move()
         move2 = self.p2.move()
         if move1 == move2:
-            return ("TIE!")
+            return ("TIE!\n")
         elif self.beats(move1, move2):
             self.p1_score += 1
-            win = ("Score for you!")
+            print("Score for you!\n")
         else:
             self.p2_score += 1
-            win = ("Sorry you loose...")
-        print(f"Player 1: {move1}  Player 2: {move2}")
-        print(f"Player 1: {self.p1_score} Player 2: {self.p2_score}")
+            print("Sorry you lost this round...\n")
+        print(f"Player 1: {move1}  Computer: {move2}\n")
+        print(f"Player 1: {self.p1_score} Computer: {self.p2_score}\n")
         
         self.p1.learn(move1, move2)
         self.p2.learn(move2, move1)
+        
 
     def play_game(self):
         print("Are ya ready?! Let's go!")
         for round in range(3):
             print(f"Round {round}:")
             self.play_round()
-        print("Game over!")
+        if self.p1_score > self.p2_score:
+            print("You won!\n")
+            print("Final scores!\n")
+            print(f"Player: {self.p1_score} Computer: {self.p2_score}\n")
+        elif self.p1_score < self.p2_score:
+            print("You lost...\n")
+            print("Final scores...\n")
+            print(f"Player: {self.p1_score} Computer: {self.p2_score}\n")
+        else:
+            print("It's a tie!")
+        
 
+# def play_again():
+#     again = input("Would you like to try one more time? (y/n) \n").lower()
+#     if again == "y":
+#         print_pause("Here we go!\n")
+#         play_game()
+#     elif again == "n":
+#         print_pause("See ya!\n")
+#         quit()
+#     else:
+#         play_again()
 
 if __name__ == '__main__':
     game = Game(humanPlayer(), random.choice([randomPlayer(), reflectPlayer(), cyclePlayer()]))
