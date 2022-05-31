@@ -10,6 +10,7 @@ in this game"""
 
 
 class Player:
+    score = 0
     
     def __init__(self):
         self.player_move = random.choice(moves)
@@ -65,15 +66,23 @@ class Game:
     def play_round(self):
         move1 = self.p1.move()
         move2 = self.p2.move()
-
+        if move1 == move2:
+            return ("TIE!")
+        elif self.beats(move1, move2):
+            self.p1_score += 1
+            win = ("Score for you!")
+        else:
+            self.p2_score += 1
+            win = ("Sorry you loose...")
         print(f"Player 1: {move1}  Player 2: {move2}")
+        print(f"Player 1: {self.p1_score} Player 2: {self.p2_score}")
         
         self.p1.learn(move1, move2)
         self.p2.learn(move2, move1)
 
     def play_game(self):
         print("Are ya ready?! Let's go!")
-        for round in range(3,1):
+        for round in range(3):
             print(f"Round {round}:")
             self.play_round()
         print("Game over!")
