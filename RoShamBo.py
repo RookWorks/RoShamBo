@@ -10,7 +10,6 @@ moves = ["rock", "paper", "scissors"]
 
 
 class Player:
-    score = 0
 
     def __init__(self):
         self.player_move = random.choice(moves)
@@ -85,28 +84,28 @@ class Game:
             self.p2_score += 1
             print('\033[1m' + "Sorry you lost this round...\n" + '\033[0m')
         print('\033[1m' + f"Player 1: {move1}"
-              " Computer: {move2}\n" + '\033[0m')
+              f" Computer: {move2}\n" + '\033[0m')
         print('\033[1m' + f"Player 1: {self.p1_score}"
-              " Computer: {self.p2_score}\n" + '\033[0m')
+              f" Computer: {self.p2_score}\n" + '\033[0m')
 
         self.p1.learn(move1, move2)
         self.p2.learn(move2, move1)
 
     def play_game(self):
-        print('\033[1m' + "Are ya ready?! Let's go!" + '\033[0m')
+        print('\033[1m' + "Are ya ready?! Let's go!\n" + '\033[0m')
         for round in range(3):
-            print('\033[1m' + f"Round {round}:" + '\033[0m')
+            print('\033[1m' + f"Round {round}:\n" + '\033[0m')
             self.play_round()
         if self.p1_score > self.p2_score:
             print('\033[1m' + "You won!\n" + '\033[0m')
             print('\033[1m' + "Final scores!\n" + '\033[0m')
             print('\033[1m' + f"Player: {self.p1_score} "
-                  "Computer: {self.p2_score}\n" + '\033[0m')
+                  f"Computer: {self.p2_score}\n" + '\033[0m')
         elif self.p1_score < self.p2_score:
             print('\033[1m' + "You lost...\n" + '\033[0m')
             print('\033[1m' + "Final scores...\n" + '\033[0m')
             print('\033[1m' + f"Player: {self.p1_score}"
-                  " Computer: {self.p2_score}\n" + '\033[0m')
+                  f" Computer: {self.p2_score}\n" + '\033[0m')
         else:
             print('\033[1m' + "It's a tie!" + '\033[0m')
         play_again()
@@ -115,18 +114,28 @@ class Game:
 def play_again():
     again = input('\033[1m' + "Would you like to try one more time? "
                   "(y/n) \n" + '\033[0m').lower()
-    if again == "y":
+    if again == "n":
+        print('\033[1m' + "See ya!\n" + '\033[0m')
+        exit(0)
+    elif again == "y":
         print('\033[1m' + "Here we go!\n" + '\033[0m')
         game.play_game()
-    elif again == "n":
-        print('\033[1m' + "See ya!\n" + '\033[0m')
-        quit()
     else:
+        print('\033[1m' + "I'm sorry what do you mean?\n" + '\033[0m')
         play_again()
 
 if __name__ == '__main__':
-    game = Game(humanPlayer(), random.choice([randomPlayer(),
-                reflectPlayer(), cyclePlayer()]))
-    game.play_game()
+    while True:
+        players = [
+            randomPlayer(),
+            reflectPlayer(),
+            cyclePlayer()
+            ]
+        p1 = humanPlayer()
+        p2 = random.choice(players)
+        game = Game(p1, p2)
+        game.play_game()
+
+        play_again()
 
 # Pycodestyle wants something here?
