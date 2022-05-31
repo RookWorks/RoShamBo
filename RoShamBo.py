@@ -45,8 +45,14 @@ class reflectPlayer(Player):
 #always something different
 class cyclePlayer(Player):
     def move(self):
-        self.comp_move = random.sample(moves)
-        return (self.comp_move)
+        if self.my_move == moves[0]:
+            return moves[1]
+        elif self.comp_move == moves[1]:
+            return moves[2]
+        elif self.my_move == moves[2]:
+            return moves[0]
+        else: 
+            return random.choice(moves)
 
 
 class Game:
@@ -96,18 +102,19 @@ class Game:
             print(f"Player: {self.p1_score} Computer: {self.p2_score}\n")
         else:
             print("It's a tie!")
+        play_again()
         
 
-# def play_again():
-#     again = input("Would you like to try one more time? (y/n) \n").lower()
-#     if again == "y":
-#         print_pause("Here we go!\n")
-#         play_game()
-#     elif again == "n":
-#         print_pause("See ya!\n")
-#         quit()
-#     else:
-#         play_again()
+def play_again():
+    again = input("Would you like to try one more time? (y/n) \n").lower()
+    if again == "y":
+        print("Here we go!\n")
+        game.play_game()
+    elif again == "n":
+        print("See ya!\n")
+        quit()
+    else:
+        play_again()
 
 if __name__ == '__main__':
     game = Game(humanPlayer(), random.choice([randomPlayer(), reflectPlayer(), cyclePlayer()]))
