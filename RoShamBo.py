@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 import random
 # """This program plays a game of Rock, Paper, Scissors between two Players,
 # and reports both Player's scores each round."""
@@ -11,11 +11,11 @@ moves = ["rock", "paper", "scissors"]
 
 class Player:
     score = 0
-    
+
     def __init__(self):
         self.player_move = random.choice(moves)
         self.comp_move = random.choice(moves)
-    
+
     def move(self):
         self.player_move = self.move
         self.comp_move = random.choice(self.move)
@@ -24,46 +24,50 @@ class Player:
         self.player_move = player_move
         self.comp_move = comp_move
 
+
 class humanPlayer(Player):
     def move(self):
         while True:
-            player_move = input("ROCK! PAPER! SCISSORS! GO!\n").lower()
+            player_move = input('\033[1m' + "ROCK! PAPER! SCISSORS!
+                                "GO!\n" + '\033[0m').lower()
             if player_move in moves:
                 return player_move
+
 
 # picks random
 class randomPlayer(Player):
     def move(self):
         return random.choice(moves)
-    
-    
-#mirrors the player    
+
+
+# mirrors the player
 class reflectPlayer(Player):
     def move(self):
         return self.comp_move
-    
-#always something different
+
+
+# always something different
 class cyclePlayer(Player):
     def move(self):
-        if self.my_move == moves[0]:
+        if self.comp_move == moves[0]:
             return moves[1]
         elif self.comp_move == moves[1]:
             return moves[2]
-        elif self.my_move == moves[2]:
+        elif self.comp_move == moves[2]:
             return moves[0]
-        else: 
+        else:
             return random.choice(moves)
 
 
 class Game:
-    #Keeping score
+    # Keeping score
     p1_score = 0
     p2_score = 0
 
     def __init__(self, p1, p2):
         self.p1 = p1
         self.p2 = p2
-        
+
     def beats(self, one, two):
         return ((one == 'rock' and two == 'scissors') or
                 (one == 'scissors' and two == 'paper') or
@@ -73,49 +77,56 @@ class Game:
         move1 = self.p1.move()
         move2 = self.p2.move()
         if move1 == move2:
-            return ("TIE!\n")
+            return ('\033[1m' + "TIE!\n" + '\033[0m')
         elif self.beats(move1, move2):
             self.p1_score += 1
-            print("Score for you!\n")
+            print('\033[1m' + "Score for you!\n" + '\033[0m')
         else:
             self.p2_score += 1
-            print("Sorry you lost this round...\n")
-        print(f"Player 1: {move1}  Computer: {move2}\n")
-        print(f"Player 1: {self.p1_score} Computer: {self.p2_score}\n")
-        
+            print('\033[1m' + "Sorry you lost this round...\n" + '\033[0m')
+        print('\033[1m' + f"Player 1: {move1}"
+              " Computer: {move2}\n" + '\033[0m')
+        print('\033[1m' + f"Player 1: {self.p1_score}"
+              " Computer: {self.p2_score}\n" + '\033[0m')
+
         self.p1.learn(move1, move2)
         self.p2.learn(move2, move1)
-        
 
     def play_game(self):
-        print("Are ya ready?! Let's go!")
+        print('\033[1m' + "Are ya ready?! Let's go!" + '\033[0m')
         for round in range(3):
-            print(f"Round {round}:")
+            print('\033[1m' + f"Round {round}:" + '\033[0m')
             self.play_round()
         if self.p1_score > self.p2_score:
-            print("You won!\n")
-            print("Final scores!\n")
-            print(f"Player: {self.p1_score} Computer: {self.p2_score}\n")
+            print('\033[1m' + "You won!\n" + '\033[0m')
+            print('\033[1m' + "Final scores!\n" + '\033[0m')
+            print('\033[1m' + f"Player: {self.p1_score} "
+                  "Computer: {self.p2_score}\n" + '\033[0m')
         elif self.p1_score < self.p2_score:
-            print("You lost...\n")
-            print("Final scores...\n")
-            print(f"Player: {self.p1_score} Computer: {self.p2_score}\n")
+            print('\033[1m' + "You lost...\n" + '\033[0m')
+            print('\033[1m' + "Final scores...\n" + '\033[0m')
+            print('\033[1m' + f"Player: {self.p1_score}"
+                  " Computer: {self.p2_score}\n" + '\033[0m')
         else:
-            print("It's a tie!")
+            print('\033[1m' + "It's a tie!" + '\033[0m')
         play_again()
-        
+
 
 def play_again():
-    again = input("Would you like to try one more time? (y/n) \n").lower()
+    again = input('\033[1m' + "Would you like to try one more time? "
+                  "(y/n) \n" + '\033[0m').lower()
     if again == "y":
-        print("Here we go!\n")
+        print('\033[1m' + "Here we go!\n" + '\033[0m')
         game.play_game()
     elif again == "n":
-        print("See ya!\n")
+        print('\033[1m' + "See ya!\n" + '\033[0m')
         quit()
     else:
         play_again()
 
 if __name__ == '__main__':
-    game = Game(humanPlayer(), random.choice([randomPlayer(), reflectPlayer(), cyclePlayer()]))
+    game = Game(humanPlayer(), random.choice([randomPlayer(),
+                reflectPlayer(), cyclePlayer()]))
     game.play_game()
+
+# Pycodestyle wants something here?
