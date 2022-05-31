@@ -28,7 +28,7 @@ class Player:
 class humanPlayer(Player):
     def move(self):
         while True:
-            player_move = input('\033[1m' + "ROCK! PAPER! SCISSORS!
+            player_move = input('\033[1m' + "ROCK! PAPER! SCISSORS! "
                                 "GO!\n" + '\033[0m').lower()
             if player_move in moves:
                 return player_move
