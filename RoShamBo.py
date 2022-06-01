@@ -15,13 +15,12 @@ class Player:
         self.player_move = random.choice(moves)
         self.comp_move = random.choice(moves)
 
-    def move(self):
+    def move(self, player_move, comp_move):
         self.player_move = self.move
         self.comp_move = random.choice(self.move)
 
     def learn(self, player_move, comp_move):
-        self.player_move = player_move
-        self.comp_move = comp_move
+        pass
 
 
 class humanPlayer(Player):
@@ -44,6 +43,10 @@ class reflectPlayer(Player):
     def move(self):
         return self.comp_move
 
+    def learn(self, player_move, comp_move):
+        self.player_move = player_move
+        self.comp_move = comp_move
+
 
 # always something different
 class cyclePlayer(Player):
@@ -56,6 +59,10 @@ class cyclePlayer(Player):
             return moves[0]
         else:
             return random.choice(moves)
+
+    def learn(self, player_move, comp_move):
+        self.player_move = player_move
+        self.comp_move = comp_move
 
 
 class Game:
@@ -76,13 +83,14 @@ class Game:
         move1 = self.p1.move()
         move2 = self.p2.move()
         if move1 == move2:
-            return ('\033[1m' + "TIE!\n" + '\033[0m')
+            print('\033[1m' + "TIE!\n" + '\033[0m')
         elif self.beats(move1, move2):
             self.p1_score += 1
             print('\033[1m' + "Score for you!\n" + '\033[0m')
         else:
             self.p2_score += 1
             print('\033[1m' + "Sorry you lost this round...\n" + '\033[0m')
+
         print('\033[1m' + f"Player 1: {move1}"
               f" Computer: {move2}\n" + '\033[0m')
         print('\033[1m' + f"Player 1: {self.p1_score}"
@@ -135,7 +143,5 @@ if __name__ == '__main__':
         p2 = random.choice(players)
         game = Game(p1, p2)
         game.play_game()
-
-        play_again()
 
 # Pycodestyle wants something here?
