@@ -15,9 +15,9 @@ class Player:
         self.player_move = random.choice(moves)
         self.comp_move = random.choice(moves)
 
-    def move(self, player_move, comp_move):
-        self.player_move = self.move
-        self.comp_move = random.choice(self.move)
+    # def move(self, player_move, comp_move):
+    #     self.player_move = self.move
+    #     self.comp_move = random.choice(self.move)
 
     def learn(self, player_move, comp_move):
         pass
@@ -31,48 +31,44 @@ class humanPlayer(Player):
             if player_move in moves:
                 return player_move
             else:
-                print("X Uh oh, that is not a move!")
+                print("Uh oh, that is not a move!")
+
 
 # always picks rock
-# class rockPlayer(Player):
-#     def move(self):
-#         return 'rock'
-            
-# # picks random
-# class randomPlayer(Player):
-#     def move(self):
-#         return random.choice(moves)
+class rockPlayer(Player):
+    def move(self):
+        return 'rock'
 
 
-# # mirrors the player
-# class reflectPlayer(Player):
-#     def move(self):
-#         return self.comp_move
+# picks random
+class randomPlayer(Player):
+    def move(self):
+        return random.choice(moves)
 
-#     def learn(self, player_move, comp_move):
-#         self.player_move = player_move
-#         self.comp_move = comp_move
+
+# mirrors the player
+class reflectPlayer(Player):
+    def move(self):
+        return self.comp_move
+
+    def learn(self, player_move, comp_move):
+        self.player_move = player_move
+        self.comp_move = comp_move
 
 
 # always something different
 class cyclePlayer(Player):
     def move(self):
+        # print(self.comp_move)
         if self.comp_move == "scissors":
+            self.comp_move = "rock"
             return "rock"
         elif self.comp_move == "rock":
+            self.comp_move = "paper"
             return "paper"
         elif self.comp_move == "paper":
+            self.comp_move = "scissors"
             return "scissors"
-#         if self.comp_move == moves[0]:
-#             return moves[1]
-#         elif self.comp_move == moves[1]:
-#             return moves[2]
-#         elif self.comp_move == moves[2]:
-#             return moves[0]
-
-#     def learn(self, player_move, comp_move):
-# #         self.player_move = player_move
-#         self.comp_move = comp_move
 
 
 class Game:
@@ -145,11 +141,11 @@ def play_again():
 if __name__ == '__main__':
     while True:
         players = [
-#             rockPlayer(),
-#             randomPlayer(),
-#             reflectPlayer(),
-            cyclePlayer()
-            ]
+                    rockPlayer(),
+                    randomPlayer(),
+                    reflectPlayer(),
+                    cyclePlayer()
+                    ]
         p1 = humanPlayer()
         p2 = random.choice(players)
         game = Game(p1, p2)
