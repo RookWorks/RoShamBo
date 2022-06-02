@@ -30,39 +30,49 @@ class humanPlayer(Player):
                                 "GO!\n" + '\033[0m').lower()
             if player_move in moves:
                 return player_move
+            else:
+                print("X Uh oh, that is not a move!")
+
+# always picks rock
+# class rockPlayer(Player):
+#     def move(self):
+#         return 'rock'
+            
+# # picks random
+# class randomPlayer(Player):
+#     def move(self):
+#         return random.choice(moves)
 
 
-# picks random
-class randomPlayer(Player):
-    def move(self):
-        return random.choice(moves)
+# # mirrors the player
+# class reflectPlayer(Player):
+#     def move(self):
+#         return self.comp_move
 
-
-# mirrors the player
-class reflectPlayer(Player):
-    def move(self):
-        return self.comp_move
-
-    def learn(self, player_move, comp_move):
-        self.player_move = player_move
-        self.comp_move = comp_move
+#     def learn(self, player_move, comp_move):
+#         self.player_move = player_move
+#         self.comp_move = comp_move
 
 
 # always something different
 class cyclePlayer(Player):
     def move(self):
-        if self.comp_move == moves[0]:
-            return moves[1]
-        elif self.comp_move == moves[1]:
-            return moves[2]
-        elif self.comp_move == moves[2]:
-            return moves[0]
-        else:
-            return random.choice(moves)
+        if self.comp_move == "scissors":
+            return "rock"
+        elif self.comp_move == "rock":
+            return "paper"
+        elif self.comp_move == "paper":
+            return "scissors"
+#         if self.comp_move == moves[0]:
+#             return moves[1]
+#         elif self.comp_move == moves[1]:
+#             return moves[2]
+#         elif self.comp_move == moves[2]:
+#             return moves[0]
 
-    def learn(self, player_move, comp_move):
-        self.player_move = player_move
-        self.comp_move = comp_move
+#     def learn(self, player_move, comp_move):
+# #         self.player_move = player_move
+#         self.comp_move = comp_move
 
 
 class Game:
@@ -135,8 +145,9 @@ def play_again():
 if __name__ == '__main__':
     while True:
         players = [
-            randomPlayer(),
-            reflectPlayer(),
+#             rockPlayer(),
+#             randomPlayer(),
+#             reflectPlayer(),
             cyclePlayer()
             ]
         p1 = humanPlayer()
